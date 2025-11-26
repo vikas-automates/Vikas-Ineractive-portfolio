@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { ExperienceLog } from './components/ExperienceLog';
 import { BentoGrid } from './components/BentoGrid';
 import { ProjectShowcase } from './components/ProjectShowcase';
+import { Certifications } from './components/Certifications';
 import { Footer } from './components/Footer';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
@@ -79,6 +80,22 @@ const App = () => {
               </p>
               <ProjectShowcase />
             </motion.div>
+          </section>
+
+          <section id="certifications">
+             <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">Certifications & Achievements.</h2>
+              <p className="text-xl text-text-secondary max-w-2xl">
+                Recognized credentials and impact-driven results throughout my career.
+              </p>
+            </motion.div>
+            <Certifications />
           </section>
 
           <section id="experience">

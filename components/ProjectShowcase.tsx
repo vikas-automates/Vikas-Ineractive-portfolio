@@ -221,45 +221,85 @@ export default defineConfig({
     "typescript": "^5.0.0"
   }
 }`,
-    "README.md": `# Playwright Automation Showcase
+    "README.md": `# 🎭 Playwright Automation Showcase
 
-## Overview
-This repository contains a production-grade test automation framework for the portfolio website. It demonstrates strict adherence to the **Page Object Model (POM)** pattern, modular utilities, and a robust CI/CD pipeline integrated with **GitHub Actions** and **Allure Reporting**.
+[![Playwright Tests](https://img.shields.io/badge/build-passing-brightgreen)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
+[![Allure Report](https://img.shields.io/badge/Allure-Report-blue)]()
 
-## Project Structure
-The project is organized to separate concerns and ensure scalability:
+> **A production-grade test automation framework designed to validate the modern web experience of this portfolio.**
 
-\`\`\`
+## 🚀 About The Project
+
+This repository demonstrates a **robust, scalable, and maintainable** test automation architecture. Unlike basic tutorials, this framework implements industry best practices used in enterprise environments to validate mission-critical applications.
+
+It specifically targets the **Vikas Kumar Portfolio**, verifying:
+*   **UX/UI Integrity**: Smooth scrolling, responsive layouts, and animations.
+*   **Functional Criticality**: Contact links, navigation flows, and data visualization rendering.
+*   **Content Accuracy**: Resume data validation against source of truth.
+
+## 🛠️ Tech Stack & Architecture
+
+Built with a focus on **Page Object Model (POM)** and **Type Safety**.
+
+| Category | Technology | Usage |
+|----------|------------|-------|
+| **Core** | **Playwright** | End-to-end testing engine |
+| **Language** | **TypeScript** | Type-safe implementation |
+| **Reporting** | **Allure** | Historical trend analysis & rich reporting |
+| **CI/CD** | **GitHub Actions** | Automated pipeline execution |
+
+## 📂 Project Structure
+
+The project follows a modular structure to ensure maintainability:
+
+\`\`\`sh
 playwright-automation-showcase/
-├── tests/              # Test specifications (specs)
-│   ├── portfolio.spec.ts   # Main functional tests
-│   └── navigation.spec.ts  # Routing and scroll tests
-├── pages/              # Page Object Models (POM)
-│   └── PortfolioPage.ts    # Locators & methods for the main page
-├── utils/              # Shared utilities
-│   ├── testData.ts         # Centralized test data
-│   └── helpers.ts          # Common helper functions
-├── .github/workflows/  # CI/CD Configuration
-└── playwright.config.ts # Global Test Configuration
+├── 📁 tests/              # Test specifications (The "What")
+│   ├── portfolio.spec.ts  # Functional validation of the portfolio
+│   └── navigation.spec.ts # UX & Routing validation
+├── 📁 pages/              # Page Object Models (The "How")
+│   └── PortfolioPage.ts   # Encapsulated locators & actions
+├── 📁 utils/              # Shared Utilities
+│   ├── testData.ts        # Single source of truth for test data
+│   └── helpers.ts         # Custom assertions & error handling
+└── 📁 .github/workflows/  # CI/CD Pipeline Config
 \`\`\`
 
-## Key Features
+## ⚡ Getting Started
 
-### 1. Page Object Model (POM)
-All selectors and interactions are encapsulated within \`pages/\`. Tests never interact with raw locators (e.g., \`page.locator('.class')\`), ensuring that UI changes only require updates in one place.
+### Prerequisites
+*   Node.js 18+
+*   npm
 
-### 2. Allure Reporting & Dashboard
-We use **Allure** for rich reporting. 
-- **Local:** Run \`npm run report:open\` to view interactive graphs of test execution.
-- **CI/CD:** The pipeline automatically generates the report and deploys it to **GitHub Pages**, providing a persistent history of test runs.
+### Installation
+\`\`\`bash
+git clone https://github.com/vkvikaskumar/playwright-showcase.git
+cd playwright-showcase
+npm install
+npx playwright install --with-deps
+\`\`\`
 
-### 3. GitHub Actions Pipeline
-The workflow defined in \`.github/workflows/playwright.yml\`:
-1.  Sets up the Node.js environment.
-2.  Installs dependencies and Playwright browsers.
-3.  Executes tests across Chromium, Firefox, and WebKit.
-4.  Generates the Allure HTML report.
-5.  Deploys the report to the \`gh-pages\` branch.
+### Running Tests
+\`\`\`bash
+# Run all tests in headless mode
+npx playwright test
+
+# Run with UI Mode (Interactive)
+npx playwright test --ui
+\`\`\`
+
+## 📊 Reporting & CI/CD
+
+This project uses **GitHub Actions** to automate the testing lifecycle.
+
+1.  **Trigger**: On every \`push\` to main or \`pull_request\`.
+2.  **Execution**: Runs tests across Chromium, Firefox, and WebKit shards.
+3.  **Artifacts**: Generates an Allure Report.
+4.  **Deployment**: Publishes the report to **GitHub Pages**.
+
+---
+*Built with ❤️ by Vikas Kumar*
 `
   }
 };
