@@ -164,6 +164,57 @@ jobs:
         uses: actions/deploy-pages@v2`
       }
     },
+    "Jenkinsfile": `pipeline {
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.40.0-jammy'
+            args '--ipc=host'
+        }
+    }
+    
+    environment {
+        CI = 'true'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                // Runs tests in headless mode inside the Docker container
+                sh 'npx playwright test'
+            }
+        }
+
+        stage('Generate Report') {
+            steps {
+                sh 'npm run report:generate'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Publish Allure Report using the Jenkins Allure Plugin
+            allure includeProperties: false, 
+                   jdk: '', 
+                   results: [[path: 'allure-results']]
+            
+            // Clean up workspace to save disk space
+            cleanWs()
+        }
+    }
+}`,
     "playwright.config.ts": `import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -224,19 +275,33 @@ export default defineConfig({
     "README.md": `# 🎭 Playwright Automation Showcase
 
 [![Playwright Tests](https://img.shields.io/badge/build-passing-brightgreen)]()
+[![Jenkins](https://img.shields.io/badge/Jenkins-Build-red)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
-[![Allure Report](https://img.shields.io/badge/Allure-Report-blue)]()
 
 > **A production-grade test automation framework designed to validate the modern web experience of this portfolio.**
 
-## 🚀 About The Project
+## 🚀 Project Mission
 
-This repository demonstrates a **robust, scalable, and maintainable** test automation architecture. Unlike basic tutorials, this framework implements industry best practices used in enterprise environments to validate mission-critical applications.
+This repository demonstrates a **robust, scalable, and maintainable** test automation architecture. It implements industry best practices used in enterprise environments to validate mission-critical applications.
 
 It specifically targets the **Vikas Kumar Portfolio**, verifying:
 *   **UX/UI Integrity**: Smooth scrolling, responsive layouts, and animations.
 *   **Functional Criticality**: Contact links, navigation flows, and data visualization rendering.
 *   **Content Accuracy**: Resume data validation against source of truth.
+
+## ♾️ Multi-CI Support (Jenkins & GitHub Actions)
+
+This framework is **CI-Agnostic**, demonstrating versatility in DevOps environments:
+
+### 1. GitHub Actions (Cloud Native)
+*   Automatically triggers on PRs and merges.
+*   Parallel execution across Chromium, Firefox, and WebKit.
+*   Deploys Allure reports to GitHub Pages.
+
+### 2. Jenkins (Enterprise Standard)
+*   Includes a \`Jenkinsfile\` for Declarative Pipelines.
+*   Uses **Docker Agents** to ensure a consistent execution environment.
+*   Integrates with the **Allure Plugin** for historical trend analysis.
 
 ## 🛠️ Tech Stack & Architecture
 
@@ -246,8 +311,8 @@ Built with a focus on **Page Object Model (POM)** and **Type Safety**.
 |----------|------------|-------|
 | **Core** | **Playwright** | End-to-end testing engine |
 | **Language** | **TypeScript** | Type-safe implementation |
+| **CI/CD** | **Jenkins & GH Actions** | Automated pipeline execution |
 | **Reporting** | **Allure** | Historical trend analysis & rich reporting |
-| **CI/CD** | **GitHub Actions** | Automated pipeline execution |
 
 ## 📂 Project Structure
 
@@ -263,7 +328,8 @@ playwright-automation-showcase/
 ├── 📁 utils/              # Shared Utilities
 │   ├── testData.ts        # Single source of truth for test data
 │   └── helpers.ts         # Custom assertions & error handling
-└── 📁 .github/workflows/  # CI/CD Pipeline Config
+├── 📄 Jenkinsfile         # Enterprise CI Pipeline Config
+└── 📁 .github/workflows/  # Cloud CI Pipeline Config
 \`\`\`
 
 ## ⚡ Getting Started
@@ -289,15 +355,6 @@ npx playwright test
 npx playwright test --ui
 \`\`\`
 
-## 📊 Reporting & CI/CD
-
-This project uses **GitHub Actions** to automate the testing lifecycle.
-
-1.  **Trigger**: On every \`push\` to main or \`pull_request\`.
-2.  **Execution**: Runs tests across Chromium, Firefox, and WebKit shards.
-3.  **Artifacts**: Generates an Allure Report.
-4.  **Deployment**: Publishes the report to **GitHub Pages**.
-
 ---
 *Built with ❤️ by Vikas Kumar*
 `
@@ -309,6 +366,7 @@ const FileIcon = ({ name }: { name: string }) => {
   if (name.endsWith('.yml')) return <span className="text-yellow-400 font-bold text-xs mr-2">YML</span>;
   if (name.endsWith('.json')) return <span className="text-green-400 font-bold text-xs mr-2">{}</span>;
   if (name.endsWith('.md')) return <span className="text-gray-400 font-bold text-xs mr-2">MD</span>;
+  if (name === 'Jenkinsfile') return <span className="text-red-400 font-bold text-xs mr-2">J</span>;
   return <FileCode size={14} className="mr-2 text-text-secondary" />;
 };
 
