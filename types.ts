@@ -22,6 +22,7 @@ export interface Achievement {
 export interface Certification {
   name: string;
   issuer: string;
+  url?: string;
 }
 
 export interface ResumeData {

@@ -17,7 +17,7 @@ const App = () => {
   });
 
   return (
-    <div className="min-h-screen w-full bg-background text-text selection:bg-primary selection:text-white overflow-hidden">
+    <div className="min-h-screen w-full bg-background text-text selection:bg-primary selection:text-white overflow-x-hidden">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-50"

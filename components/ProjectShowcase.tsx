@@ -1,6 +1,5 @@
-
-import React, { useState } from 'react';
-import { Folder, FileCode, ChevronRight, ChevronDown, Play } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Folder, FileCode, ChevronRight, ChevronDown, Play, X, Terminal, CheckCircle2 } from 'lucide-react';
 
 const FILE_STRUCTURE = {
   "playwright-automation-showcase": {
@@ -356,8 +355,7 @@ npx playwright test --ui
 \`\`\`
 
 ---
-*Built with ❤️ by Vikas Kumar*
-`
+*Built with ❤️ by Vikas Kumar*`
   }
 };
 
@@ -382,6 +380,18 @@ export const ProjectShowcase = () => {
     'workflows': false
   });
 
+  // Terminal State
+  const [showTerminal, setShowTerminal] = useState(false);
+  const [terminalLogs, setTerminalLogs] = useState<string[]>([]);
+  const [isTestRunning, setIsTestRunning] = useState(false);
+  const terminalEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showTerminal && terminalEndRef.current) {
+        terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [terminalLogs, showTerminal]);
+
   const toggleFolder = (path: string) => {
     setExpandedFolders(prev => ({ ...prev, [path]: !prev[path] }));
   };
@@ -391,7 +401,42 @@ export const ProjectShowcase = () => {
     setContent(fileContent);
   };
 
-  // Recursive function to render tree
+  const runTestSimulation = () => {
+    if (isTestRunning) return;
+    setShowTerminal(true);
+    setIsTestRunning(true);
+    setTerminalLogs([]);
+
+    const fileName = selectedFile.includes('.spec.ts') ? selectedFile : 'portfolio.spec.ts';
+    
+    // Simulation steps
+    const steps = [
+        { text: `> npx playwright test ${fileName}`, delay: 0 },
+        { text: `Running 1 test using 1 worker`, delay: 600 },
+        { text: `[chromium] › ${fileName}:11:3 › Verify Hero Section identity matches candidate`, delay: 1400 },
+        { text: `  ✓ Verify Hero Section identity matches candidate (450ms)`, delay: 2000 },
+        { text: `[chromium] › ${fileName}:18:3 › Navigation to Projects section verification`, delay: 2600 },
+        { text: `  ✓ Navigation to Projects section verification (800ms)`, delay: 3400 },
+        { text: `[chromium] › ${fileName}:25:3 › Skill Radar Chart renders correctly`, delay: 4000 },
+        { text: `  ✓ Skill Radar Chart renders correctly (320ms)`, delay: 4500 },
+        { text: ``, delay: 4700 },
+        { text: `  3 passed (3.2s)`, delay: 5000, isSuccess: true },
+        { text: `✨ Done in 3.84s.`, delay: 5200 }
+    ];
+
+    steps.forEach(step => {
+        setTimeout(() => {
+            setTerminalLogs(prev => [...prev, step.text]);
+            if (step.isSuccess) {
+                // Optional: Trigger a success state
+            }
+            if (step.text.includes('Done')) {
+                setIsTestRunning(false);
+            }
+        }, step.delay);
+    });
+  };
+
   const renderTree = (node: any, path: string = '') => {
     return Object.keys(node).map((key) => {
       const isFolder = typeof node[key] === 'object';
@@ -432,7 +477,7 @@ export const ProjectShowcase = () => {
       <div className="flex flex-col md:flex-row gap-6 h-[600px] glass-panel rounded-xl overflow-hidden border border-white/10 shadow-2xl">
         
         {/* Sidebar / File Explorer */}
-        <div className="w-full md:w-64 bg-black/50 border-r border-white/10 flex flex-col">
+        <div className="w-full md:w-64 bg-black/50 border-r border-white/10 flex flex-col hidden md:flex">
           <div className="p-4 border-b border-white/10 flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -447,7 +492,7 @@ export const ProjectShowcase = () => {
         </div>
 
         {/* Code Editor Area */}
-        <div className="flex-1 flex flex-col bg-[#0d0d0d]">
+        <div className="flex-1 flex flex-col bg-[#0d0d0d] relative">
           {/* Editor Header */}
           <div className="h-12 border-b border-white/10 flex items-center px-4 justify-between bg-black/20">
             <div className="flex items-center gap-2">
@@ -455,26 +500,69 @@ export const ProjectShowcase = () => {
               <span className="text-sm text-white font-medium">{selectedFile}</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-green-500/10 border border-green-500/20 cursor-pointer hover:bg-green-500/20 transition-colors">
-                <Play size={10} className="text-green-500" />
-                <span className="text-xs text-green-500 font-medium">Run Test</span>
-              </div>
+                {/* Run Test Button */}
+              <button 
+                onClick={runTestSimulation}
+                disabled={isTestRunning}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded border transition-all ${
+                    isTestRunning 
+                    ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500 cursor-wait' 
+                    : 'bg-green-500/10 border-green-500/20 text-green-500 hover:bg-green-500/20'
+                }`}
+              >
+                {isTestRunning ? <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-yellow-500" /> : <Play size={12} />}
+                <span className="text-xs font-medium">{isTestRunning ? 'Running...' : 'Run Test'}</span>
+              </button>
             </div>
           </div>
 
           {/* Editor Content */}
-          <div className="flex-1 overflow-auto p-4 font-mono text-sm leading-relaxed relative group">
-             <pre className="text-gray-300">
-                <code>
-                    {content.split('\n').map((line, i) => (
-                        <div key={i} className="table-row">
-                            <span className="table-cell text-right pr-4 select-none text-gray-700 w-8">{i + 1}</span>
-                            <span className="table-cell whitespace-pre-wrap">{line}</span>
+          <div className="flex-1 overflow-auto p-4 font-mono text-sm leading-relaxed relative group bg-[#0d0d0d]">
+             <div className="text-gray-300 min-w-max">
+                {content.split('\n').map((line, i) => (
+                     <div key={i} className="flex">
+                        <span className="text-right pr-4 select-none text-gray-700 w-8 flex-shrink-0 inline-block">{i + 1}</span>
+                        <span className="whitespace-pre">{line || ' '}</span>
+                    </div>
+                ))}
+             </div>
+          </div>
+
+          {/* Terminal Panel (Simulated) */}
+          {showTerminal && (
+            <div className="absolute bottom-0 left-0 right-0 bg-[#0d0d0d] border-t border-white/20 shadow-2xl flex flex-col transition-all h-[40%] animate-in slide-in-from-bottom duration-300">
+                <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
+                    <div className="flex items-center gap-2">
+                        <Terminal size={12} className="text-white/60" />
+                        <span className="text-xs uppercase font-medium text-white/60">Terminal</span>
+                    </div>
+                    <button 
+                        onClick={() => setShowTerminal(false)}
+                        className="text-white/40 hover:text-white transition-colors"
+                    >
+                        <X size={14} />
+                    </button>
+                </div>
+                <div className="flex-1 p-4 overflow-y-auto font-mono text-sm">
+                    {terminalLogs.map((log, idx) => (
+                        <div key={idx} className={`mb-1 ${log.includes('passed') ? 'text-green-400' : 'text-gray-300'}`}>
+                            {log.includes('✓') && <span className="text-green-500 mr-2">✓</span>}
+                            {log.replace('✓', '')}
                         </div>
                     ))}
-                </code>
-             </pre>
-          </div>
+                    {!isTestRunning && terminalLogs.length > 0 && (
+                        <div className="mt-2 text-green-500 flex items-center gap-2">
+                             <CheckCircle2 size={14} />
+                             <span>Job successfully completed.</span>
+                        </div>
+                    )}
+                    {isTestRunning && (
+                        <div className="animate-pulse text-green-500">_</div>
+                    )}
+                    <div ref={terminalEndRef} />
+                </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { RESUME } from '../data';
 import { motion } from 'framer-motion';
-import { BadgeCheck, Trophy } from 'lucide-react';
+import { BadgeCheck, Trophy, ExternalLink } from 'lucide-react';
 
 export const Certifications = () => {
   return (
@@ -17,15 +17,9 @@ export const Certifications = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {RESUME.certifications.map((cert, idx) => (
-                <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="group flex items-start gap-4 p-5 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors"
-                >
+            {RESUME.certifications.map((cert, idx) => {
+                const CardContent = () => (
+                    <>
                     <div className="mt-1 text-primary/60 group-hover:text-primary transition-colors">
                         <BadgeCheck size={20} />
                     </div>
@@ -33,8 +27,42 @@ export const Certifications = () => {
                         <h4 className="font-medium text-white group-hover:text-primary transition-colors">{cert.name}</h4>
                         <p className="text-sm text-text-secondary mt-1">{cert.issuer}</p>
                     </div>
-                </motion.div>
-            ))}
+                    </>
+                );
+
+                if (cert.url) {
+                    return (
+                        <a 
+                            key={idx}
+                            href={cert.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group relative flex items-start gap-4 p-5 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer overflow-hidden"
+                        >
+                            <CardContent />
+                            {/* Hover Overlay */}
+                            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span className="text-primary font-medium flex items-center gap-2">
+                                    Verify Credential <ExternalLink size={14} />
+                                </span>
+                            </div>
+                        </a>
+                    )
+                }
+
+                return (
+                    <motion.div 
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: idx * 0.1 }}
+                        className="group flex items-start gap-4 p-5 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors"
+                    >
+                        <CardContent />
+                    </motion.div>
+                );
+            })}
         </div>
       </div>
 

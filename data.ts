@@ -84,10 +84,26 @@ export const RESUME: ResumeData = {
     }
   ],
   certifications: [
-    { name: "ISTQB® Certified Tester", issuer: "Foundation Level | iSQI" },
-    { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services" },
-    { name: "Intro to Gen AI & LLMs", issuer: "Google Cloud" },
-    { name: "MCP Servers and Automation", issuer: "ShiftSync" }
+    { 
+        name: "ISTQB® Certified Tester", 
+        issuer: "Foundation Level | iSQI",
+        url: "https://app.skillsclub.com/credential/58652-b436e6c4706431e857fadc98ba6fec8674377c89904264bcb94e1e8362a912f2"
+    },
+    { 
+        name: "AWS Certified Cloud Practitioner", 
+        issuer: "Amazon Web Services",
+        url: "https://www.credly.com/badges/1713094d-ad9c-415e-973e-529e7520be7d/linked_in_profile"
+    },
+    { 
+        name: "Intro to Gen AI & LLMs", 
+        issuer: "Google Cloud",
+        url: "https://www.coursera.org/account/accomplishments/specialization/G1Q0YLAU7AXA"
+    },
+    { 
+        name: "MCP Servers and Automation", 
+        issuer: "ShiftSync",
+        url: "https://credsverse.com/credentials/74ba4580-56c7-42a8-87e6-e0053fb19e62"
+    }
   ],
   achievements: [
     { title: "Efficiency Boost", description: "Improved team efficiency by 35%." },
