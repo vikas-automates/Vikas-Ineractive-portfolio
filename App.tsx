@@ -17,7 +17,7 @@ const App = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background text-text selection:bg-primary selection:text-white">
+    <div className="min-h-screen w-full bg-background text-text selection:bg-primary selection:text-white overflow-hidden">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-50"
@@ -45,7 +45,7 @@ const App = () => {
         </div>
       </nav>
 
-      <main className="relative z-10">
+      <main className="relative z-10 w-full">
         <Hero />
         
         <div className="max-w-6xl mx-auto px-6 py-24 space-y-32">
