@@ -15,7 +15,7 @@ export const RESUME: ResumeData = {
     { name: "Languages (Java/TS/Python)", level: 90, fullMark: 100 },
     { name: "API Testing (Postman/REST)", level: 90, fullMark: 100 },
     { name: "Databases (SQL/NoSQL)", level: 80, fullMark: 100 },
-    { name: "AI Tools (Copilot/LLM)", level: 75, fullMark: 100 },
+    { name: "AI Agent Orchestration (MCP/Copilot/Claude)", level: 90, fullMark: 100 },
   ],
   experience: [
     {
