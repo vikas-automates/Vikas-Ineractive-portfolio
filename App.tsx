@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { ExperienceLog } from './components/ExperienceLog';
 import { BentoGrid } from './components/BentoGrid';
 import { ProjectShowcase } from './components/ProjectShowcase';
+import { AIWorkflow } from './components/AIWorkflow';
 import { Certifications } from './components/Certifications';
 import { Footer } from './components/Footer';
 import { motion, useScroll, useSpring } from 'framer-motion';
@@ -29,13 +30,19 @@ const App = () => {
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="font-semibold text-lg tracking-tight">Vikas Kumar</div>
           <div className="flex gap-6 items-center">
-            <button 
+            <button
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth'})}
                 className="text-sm font-medium text-text-secondary hover:text-white transition-colors"
             >
                 Projects
             </button>
-            <a 
+            <button
+                onClick={() => document.getElementById('ai-workflow')?.scrollIntoView({ behavior: 'smooth'})}
+                className="text-sm font-medium text-text-secondary hover:text-white transition-colors"
+            >
+                AI Workflow
+            </button>
+            <a
                 href="mailto:vkvikaskumar447@gmail.com"
                 className="text-sm font-medium text-text-secondary hover:text-white transition-colors"
             >
@@ -80,6 +87,22 @@ const App = () => {
               </p>
               <ProjectShowcase />
             </motion.div>
+          </section>
+
+          <section id="ai-workflow">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">AI-Native Delivery.</h2>
+              <p className="text-xl text-text-secondary max-w-2xl">
+                Piloting an agent-orchestrated SDLC — from story breakdown to AI-assisted exploratory testing.
+              </p>
+            </motion.div>
+            <AIWorkflow />
           </section>
 
           <section id="certifications">

@@ -35,7 +35,7 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Architecting scalable test automation frameworks and AI-augmented CI/CD pipelines.
+          Architecting AI-native QA workflows — from agent-orchestrated delivery pipelines to scalable test automation.
         </motion.p>
         
         <motion.div
@@ -51,7 +51,7 @@ export const Hero = () => {
                 View Work
             </button>
              <button 
-                onClick={() => window.open('https://www.linkedin.com', '_blank')}
+                onClick={() => window.open('https://www.linkedin.com/in/vikas-automates/', '_blank')}
                 className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full font-medium transition-all backdrop-blur-sm"
             >
                 LinkedIn

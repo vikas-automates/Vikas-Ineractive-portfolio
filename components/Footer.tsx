@@ -8,8 +8,8 @@ export const Footer = () => {
           <p>© {new Date().getFullYear()} Vikas Kumar. All rights reserved.</p>
         </div>
         <div className="flex gap-6">
-          <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-white transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/vikas-automates/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+          <a href="https://github.com/vikas-automates" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
           <a href="mailto:vkvikaskumar447@gmail.com" className="hover:text-white transition-colors">Email</a>
         </div>
       </div>
