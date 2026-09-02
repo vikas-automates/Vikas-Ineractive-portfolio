@@ -384,11 +384,15 @@ export const ProjectShowcase = () => {
   const [showTerminal, setShowTerminal] = useState(false);
   const [terminalLogs, setTerminalLogs] = useState<string[]>([]);
   const [isTestRunning, setIsTestRunning] = useState(false);
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const terminalContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (showTerminal && terminalEndRef.current) {
-        terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    // Scroll only the terminal's own log container, not the page —
+    // scrollIntoView bubbles up to ancestor scroll containers (including
+    // the window), which was yanking the whole page down on every log line.
+    if (showTerminal && terminalContainerRef.current) {
+        const container = terminalContainerRef.current;
+        container.scrollTop = container.scrollHeight;
     }
   }, [terminalLogs, showTerminal]);
 
@@ -543,7 +547,7 @@ export const ProjectShowcase = () => {
                         <X size={14} />
                     </button>
                 </div>
-                <div className="flex-1 p-4 overflow-y-auto font-mono text-sm">
+                <div ref={terminalContainerRef} className="flex-1 p-4 overflow-y-auto font-mono text-sm">
                     {terminalLogs.map((log, idx) => (
                         <div key={idx} className={`mb-1 ${log.includes('passed') ? 'text-green-400' : 'text-gray-300'}`}>
                             {log.includes('✓') && <span className="text-green-500 mr-2">✓</span>}
@@ -559,7 +563,6 @@ export const ProjectShowcase = () => {
                     {isTestRunning && (
                         <div className="animate-pulse text-green-500">_</div>
                     )}
-                    <div ref={terminalEndRef} />
                 </div>
             </div>
           )}

@@ -50,22 +50,27 @@ export const Hero = () => {
             >
                 View Work
             </button>
-             <button 
-                onClick={() => window.open('https://www.linkedin.com/in/vikas-automates/', '_blank')}
+             <a
+                href="https://www.linkedin.com/in/vikas-automates/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full font-medium transition-all backdrop-blur-sm"
             >
                 LinkedIn
-            </button>
+            </a>
         </motion.div>
       </div>
 
-      <motion.div 
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30"
+      <motion.button
+        type="button"
+        onClick={() => document.getElementById('highlights')?.scrollIntoView({ behavior: 'smooth' })}
+        aria-label="Scroll to next section"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 hover:text-white/60 transition-colors cursor-pointer"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
       >
         <ChevronDown size={32} />
-      </motion.div>
+      </motion.button>
     </div>
   );
 };
