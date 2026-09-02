@@ -22,15 +22,29 @@ export const RESUME: ResumeData = {
       company: "JD Power & Associates",
       role: "Senior QA Automation Analyst",
       location: "London, ON (Remote)",
-      period: "March 2022 – Present",
-      tech: ["Playwright", "TypeScript", "Serenity BDD", "Cucumber", "Docker", "AWS", "GitLab CI"],
+      period: "March 2025 – Present",
+      tech: ["Playwright", "TypeScript", "Serenity BDD", "Cucumber", "Docker", "AWS", "GitLab CI", "Claude", "GitHub Copilot"],
       details: [
-        "Lead team of 5 QA analysts in Agile environment, collaborating with developers to deliver mission-critical automotive intelligence solutions.",
-        "Architect and maintain scalable test automation frameworks using Playwright, TypeScript, Serenity BDD, and Cucumber (500+ scenarios).",
-        "Design and implement GitLab CI/CD pipelines with Docker containerization and AWS integration.",
-        "Improved team efficiency by 35% through process optimization and JIRA metrics.",
-        "Leverage GitHub Copilot to achieve 3X velocity in test script development.",
+        "Promoted to Senior QA Automation Analyst in recognition of technical leadership scaling automation, quality practices, and AI-native delivery.",
+        "Lead a team of 5 QA analysts in an Agile environment, architecting and maintaining scalable test automation frameworks (Playwright, TypeScript, Serenity BDD, Cucumber) covering 500+ scenarios for mission-critical automotive intelligence solutions.",
+        "Piloting an AI-native SDLC — an orchestrator-driven agent workflow spanning story breakdown, development, and testing, plus an AI-assisted exploratory testing loop that drafts verified bug tickets from agent-run functional tests.",
+        "Design and maintain GitLab CI/CD pipelines with Docker containerization and AWS integration; improved team efficiency by 35% through process optimization and JIRA metrics.",
+        "Leverage GitHub Copilot and Claude to accelerate automation scripting, achieving up to 3x velocity in test script development.",
         "Perform complex database validation using SQL queries against MS SQL Server and NoSQL."
+      ]
+    },
+    {
+      company: "JD Power & Associates",
+      role: "QA Automation Analyst II",
+      location: "London, ON (Remote)",
+      period: "March 2022 – March 2025",
+      tech: ["Selenium", "Java", "Git", "Maven", "Jenkins", "SQL"],
+      details: [
+        "Contributed across the full software testing lifecycle — analysis, design, execution, and maintenance of test suites for B2B web applications.",
+        "Partnered with Delivery Unit stakeholders and Solution Analysts to review requirements, validate designs, and verify releases.",
+        "Developed and executed integration, system, and acceptance-level automated tests to verify requirements.",
+        "Investigated and triaged defects surfaced during UAT, regression, smoke, and integration testing; authored defect and summary reports.",
+        "Built automation using Git, Maven, and Jenkins-based CI, with working knowledge of service-oriented architecture and relational/non-relational database design."
       ]
     },
     {

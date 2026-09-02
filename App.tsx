@@ -57,7 +57,7 @@ const App = () => {
         
         <div className="max-w-6xl mx-auto px-6 py-24 space-y-32">
           
-          <section id="highlights">
+          <section id="highlights" className="scroll-mt-24">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ const App = () => {
             <BentoGrid />
           </section>
 
-          <section id="projects">
+          <section id="projects" className="scroll-mt-24">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +89,7 @@ const App = () => {
             </motion.div>
           </section>
 
-          <section id="ai-workflow">
+          <section id="ai-workflow" className="scroll-mt-24">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +105,7 @@ const App = () => {
             <AIWorkflow />
           </section>
 
-          <section id="certifications">
+          <section id="certifications" className="scroll-mt-24">
              <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ const App = () => {
             <Certifications />
           </section>
 
-          <section id="experience">
+          <section id="experience" className="scroll-mt-24">
              <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
